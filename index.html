@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bonsai 360 Editor MVP</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="viewer-panel" aria-label="盆栽ビューアー">
+        <div class="viewer-topbar">
+          <div>
+            <p class="eyebrow">Bonsai 360 MVP</p>
+            <h1>盆栽配置エディタ</h1>
+          </div>
+          <div class="weight-meter" id="weightMeter">
+            <span>重量</span>
+            <strong id="weightText">0 / 0</strong>
+          </div>
+        </div>
+
+        <div class="scene-wrap">
+          <div class="scene" id="scene" aria-label="360度回転できる鉢">
+            <div class="pot-rim"></div>
+            <div class="pot-surface" id="potSurface"></div>
+            <div class="angle-badge" id="angleBadge">0 deg</div>
+          </div>
+        </div>
+
+        <div class="rotation-controls">
+          <button id="rotateLeft" type="button" title="左回転">←</button>
+          <label>
+            <span>回転角</span>
+            <input id="angleInput" type="range" min="0" max="359" value="0" />
+          </label>
+          <button id="rotateRight" type="button" title="右回転">→</button>
+          <button id="autoRotate" type="button">自動回転</button>
+        </div>
+      </section>
+
+      <aside class="editor-panel" aria-label="配置編集">
+        <section class="panel-section">
+          <h2>鉢</h2>
+          <div class="field-grid">
+            <label>
+              <span>名前</span>
+              <input id="potName" type="text" />
+            </label>
+            <label>
+              <span>最大重量</span>
+              <input id="maxWeight" type="number" min="1" step="1" />
+            </label>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-heading">
+            <h2>オブジェクト</h2>
+            <button id="addObject" type="button">追加</button>
+          </div>
+          <label>
+            <span>選択</span>
+            <select id="objectSelect"></select>
+          </label>
+          <div class="field-grid">
+            <label>
+              <span>種類</span>
+              <select id="objectType">
+                <option value="tree">株</option>
+                <option value="stone">石</option>
+                <option value="moss">苔</option>
+                <option value="sand">砂</option>
+              </select>
+            </label>
+            <label>
+              <span>名前</span>
+              <input id="objectName" type="text" />
+            </label>
+            <label>
+              <span>半径 r</span>
+              <input id="radius" type="range" min="0" max="100" value="40" />
+            </label>
+            <label>
+              <span>角度 theta</span>
+              <input id="theta" type="range" min="0" max="359" value="0" />
+            </label>
+            <label>
+              <span>高さ z</span>
+              <input id="height" type="range" min="0" max="80" value="0" />
+            </label>
+            <label>
+              <span>layer</span>
+              <input id="layer" type="number" step="1" />
+            </label>
+            <label>
+              <span>重量</span>
+              <input id="weight" type="number" min="0" step="1" />
+            </label>
+            <label>
+              <span>サイズ</span>
+              <input id="size" type="range" min="12" max="72" value="36" />
+            </label>
+          </div>
+          <div class="object-actions">
+            <button id="duplicateObject" type="button">複製</button>
+            <button id="deleteObject" type="button" class="danger">削除</button>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h2>JSON</h2>
+          <textarea id="jsonBox" spellcheck="false"></textarea>
+          <div class="json-actions">
+            <button id="exportJson" type="button">JSONへ保存</button>
+            <button id="importJson" type="button">JSONから復元</button>
+            <button id="downloadJson" type="button">ダウンロード</button>
+          </div>
+          <p class="status" id="statusText" role="status"></p>
+        </section>
+      </aside>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
