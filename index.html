@@ -3,16 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bonsai 360 Editor MVP</title>
+    <title>Bonsai 2.5D Editor MVP</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app-shell">
-      <section class="viewer-panel" aria-label="盆栽ビューアー">
+      <section class="viewer-panel" aria-label="盆栽2.5Dビューアー">
         <div class="viewer-topbar">
           <div>
-            <p class="eyebrow">Bonsai 360 MVP</p>
-            <h1>盆栽配置エディタ</h1>
+            <p class="eyebrow">Bonsai 2.5D MVP</p>
+            <h1>盆栽鑑賞エディタ</h1>
           </div>
           <div class="weight-meter" id="weightMeter">
             <span>重量</span>
@@ -21,9 +21,12 @@
         </div>
 
         <div class="scene-wrap">
-          <div class="scene" id="scene" aria-label="360度回転できる鉢">
-            <div class="pot-rim"></div>
+          <div class="scene" id="scene" aria-label="正面やや上視点で回転できる鉢">
+            <div class="pot-shadow"></div>
+            <div class="pot-back"></div>
             <div class="pot-surface" id="potSurface"></div>
+            <div class="object-stage" id="objectStage"></div>
+            <div class="pot-front"></div>
             <div class="angle-badge" id="angleBadge">0 deg</div>
           </div>
         </div>
@@ -31,7 +34,7 @@
         <div class="rotation-controls">
           <button id="rotateLeft" type="button" title="左回転">←</button>
           <label>
-            <span>回転角</span>
+            <span>鉢回転</span>
             <input id="angleInput" type="range" min="0" max="359" value="0" />
           </label>
           <button id="rotateRight" type="button" title="右回転">→</button>
@@ -71,6 +74,7 @@
                 <option value="stone">石</option>
                 <option value="moss">苔</option>
                 <option value="sand">砂</option>
+                <option value="ornament">飾り物</option>
               </select>
             </label>
             <label>
@@ -87,7 +91,7 @@
             </label>
             <label>
               <span>高さ z</span>
-              <input id="height" type="range" min="0" max="80" value="0" />
+              <input id="height" type="range" min="0" max="60" value="0" />
             </label>
             <label>
               <span>layer</span>
@@ -98,11 +102,18 @@
               <input id="weight" type="number" min="0" step="1" />
             </label>
             <label>
-              <span>サイズ</span>
-              <input id="size" type="range" min="12" max="72" value="36" />
+              <span>スケール</span>
+              <input id="size" type="range" min="60" max="160" value="100" />
+            </label>
+            <label>
+              <span>回転</span>
+              <input id="objectRotation" type="range" min="0" max="359" value="0" />
             </label>
           </div>
+          <p class="hint" id="zHint"></p>
           <div class="object-actions">
+            <button id="layerBack" type="button">layer -</button>
+            <button id="layerForward" type="button">layer +</button>
             <button id="duplicateObject" type="button">複製</button>
             <button id="deleteObject" type="button" class="danger">削除</button>
           </div>

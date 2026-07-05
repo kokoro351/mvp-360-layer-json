@@ -1,12 +1,10 @@
-﻿:root {
+:root {
   color-scheme: light;
   --ink: #263129;
   --muted: #647067;
   --paper: #f6f2e8;
   --panel: #fffaf0;
   --line: #d7ccba;
-  --soil: #78614a;
-  --moss: #5e7b4d;
   --accent: #266b62;
   --danger: #a23c35;
   font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
@@ -19,7 +17,9 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, #f7f2e8 0%, #e8e0d1 100%);
+  background:
+    linear-gradient(180deg, rgba(255, 252, 244, 0.9), rgba(229, 220, 202, 0.95)),
+    radial-gradient(circle at 20% 10%, #f3ead9, transparent 34%);
   color: var(--ink);
 }
 
@@ -50,7 +50,7 @@ button.danger {
 
 .app-shell {
   display: grid;
-  grid-template-columns: minmax(420px, 1fr) 390px;
+  grid-template-columns: minmax(480px, 1fr) 400px;
   gap: 18px;
   min-height: 100vh;
   padding: 18px;
@@ -59,7 +59,7 @@ button.danger {
 .viewer-panel,
 .editor-panel {
   border: 1px solid var(--line);
-  background: rgba(255, 250, 240, 0.86);
+  background: rgba(255, 250, 240, 0.88);
   box-shadow: 0 16px 50px rgba(70, 57, 39, 0.14);
 }
 
@@ -129,104 +129,283 @@ h2 {
 .scene-wrap {
   display: grid;
   place-items: center;
-  min-height: 480px;
-  padding: 24px;
+  min-height: 520px;
+  padding: 18px 12px 28px;
 }
 
 .scene {
   position: relative;
-  width: min(76vmin, 720px);
-  aspect-ratio: 1;
-  perspective: 950px;
+  width: min(88vmin, 860px);
+  max-width: 100%;
+  aspect-ratio: 1.32;
+  overflow: visible;
+  touch-action: none;
 }
 
-.pot-rim,
+.pot-shadow {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: 11%;
+  height: 19%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(55, 43, 28, 0.28), rgba(55, 43, 28, 0) 68%);
+  filter: blur(4px);
+}
+
+.pot-back {
+  position: absolute;
+  left: 15%;
+  top: 44%;
+  width: 70%;
+  height: 28%;
+  border-radius: 50%;
+  background:
+    linear-gradient(180deg, rgba(255, 234, 205, 0.7), rgba(133, 86, 53, 0.34)),
+    #ad7953;
+  box-shadow: inset 0 9px 18px rgba(255, 244, 222, 0.34);
+  z-index: 100;
+}
+
 .pot-surface {
   position: absolute;
-  inset: 0;
+  left: 18%;
+  top: 41%;
+  width: 64%;
+  height: 24%;
   border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 46%, rgba(255, 255, 255, 0.08), transparent 42%),
+    repeating-radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 11px),
+    linear-gradient(180deg, #7b654d, #5f4b3a);
+  box-shadow:
+    inset 0 12px 24px rgba(29, 21, 14, 0.38),
+    inset 0 -3px 0 rgba(255, 238, 204, 0.16);
+  z-index: 170;
 }
 
-.pot-rim {
+.pot-surface::before {
+  content: "";
+  position: absolute;
+  inset: 11% 9%;
+  border-radius: 50%;
   background:
-    radial-gradient(circle at 44% 35%, #b9956f 0 22%, transparent 23%),
-    radial-gradient(circle, #c3a17c 0 63%, #947357 64% 76%, #614b3e 77% 100%);
-  box-shadow: inset 0 -18px 30px rgba(51, 33, 19, 0.28), 0 24px 50px rgba(52, 41, 29, 0.27);
-  transform: rotateX(56deg);
+    repeating-linear-gradient(10deg, rgba(224, 207, 162, 0.16) 0 2px, transparent 2px 10px),
+    radial-gradient(ellipse, rgba(104, 83, 59, 0.2), transparent 68%);
 }
 
-.pot-surface {
-  inset: 8.8%;
-  overflow: hidden;
+.object-stage {
+  position: absolute;
+  inset: 12% 6% 9%;
+}
+
+.pot-front {
+  position: absolute;
+  left: 15%;
+  top: 51%;
+  width: 70%;
+  height: 31%;
+  border-radius: 0 0 48% 48% / 0 0 70% 70%;
   background:
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.09), transparent 45%),
-    repeating-radial-gradient(circle, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 11px),
-    #6f5943;
-  box-shadow: inset 0 8px 28px rgba(22, 16, 11, 0.35);
-  transform: rotateX(56deg);
-  transform-style: preserve-3d;
+    linear-gradient(180deg, rgba(180, 118, 78, 0.95), #865b40 44%, #5a4132 100%);
+  box-shadow:
+    inset 0 -20px 28px rgba(45, 26, 17, 0.28),
+    inset 0 5px 12px rgba(255, 229, 191, 0.18);
+  clip-path: ellipse(50% 50% at 50% 0%);
+  z-index: 430;
+  pointer-events: none;
+}
+
+.pot-front::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 18%;
+  height: 36%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 238, 208, 0.18), rgba(255, 238, 208, 0));
 }
 
 .object {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  display: grid;
-  place-items: center;
-  width: var(--size);
-  height: var(--size);
+  left: var(--x);
+  top: var(--y);
+  display: block;
+  width: var(--base-size);
+  height: var(--base-size);
   padding: 0;
-  margin-left: calc(var(--size) / -2);
-  margin-top: calc(var(--size) / -2);
-  border: 1px solid rgba(28, 29, 22, 0.18);
-  border-radius: 50%;
-  box-shadow: 0 var(--shadow-y) var(--shadow-blur) rgba(25, 19, 13, 0.24);
-  transform: translate(var(--x), calc(var(--y) - var(--z))) rotateX(-56deg);
+  border: 0;
+  background: transparent;
+  opacity: var(--object-opacity);
+  transform:
+    translate(-50%, -50%)
+    scale(var(--visual-scale))
+    rotate(var(--object-rotation));
+  transform-origin: 50% 80%;
+  filter: drop-shadow(0 var(--shadow-y) var(--shadow-blur) rgba(30, 22, 14, 0.25));
   user-select: none;
+  touch-action: none;
+}
+
+.object::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 7%;
+  height: 16%;
+  border-radius: 50%;
+  background: rgba(26, 18, 11, 0.18);
+  transform: rotate(calc(var(--object-rotation) * -1));
 }
 
 .object.selected {
-  outline: 3px solid rgba(38, 107, 98, 0.75);
-  outline-offset: 3px;
+  outline: 3px solid rgba(38, 107, 98, 0.72);
+  outline-offset: 5px;
+  border-radius: 18px;
 }
 
-.object.tree {
-  background:
-    radial-gradient(circle at 46% 22%, #7ea566 0 22%, transparent 24%),
-    radial-gradient(circle at 62% 42%, #486d3f 0 24%, transparent 26%),
-    radial-gradient(circle at 36% 47%, #5e894b 0 28%, transparent 30%),
-    linear-gradient(90deg, transparent 42%, #65432e 43% 58%, transparent 59%);
+.object.is-back {
+  filter: saturate(0.86) drop-shadow(0 var(--shadow-y) var(--shadow-blur) rgba(30, 22, 14, 0.18));
 }
 
-.object.stone {
+.tree-trunk {
+  position: absolute;
+  left: 44%;
+  top: 45%;
+  width: 13%;
+  height: 42%;
+  border-radius: 45%;
+  background: linear-gradient(90deg, #4f3627, #7b5638 55%, #3a2a21);
+  transform: rotate(-5deg);
+  z-index: 2;
+}
+
+.tree-leaf {
+  position: absolute;
+  border-radius: 58% 42% 54% 46%;
+  background: radial-gradient(circle at 34% 26%, #99bd72, #547b45 58%, #375f37);
+  box-shadow: inset -8px -10px 12px rgba(22, 55, 27, 0.22);
+  z-index: 3;
+}
+
+.leaf-a {
+  left: 20%;
+  top: 10%;
+  width: 44%;
+  height: 36%;
+}
+
+.leaf-b {
+  left: 42%;
+  top: 16%;
+  width: 45%;
+  height: 38%;
+}
+
+.leaf-c {
+  left: 28%;
+  top: 34%;
+  width: 52%;
+  height: 34%;
+}
+
+.stone-core {
+  position: absolute;
+  inset: 18% 12% 20%;
   border-radius: 44% 56% 52% 48%;
-  background: radial-gradient(circle at 36% 30%, #c9c5b8, #8f8b7e 65%, #656158);
+  background: radial-gradient(circle at 34% 28%, #d2cdbc, #8e887b 62%, #5f5a50);
 }
 
-.object.moss {
-  background:
-    radial-gradient(circle at 28% 38%, #a7bf73 0 18%, transparent 19%),
-    radial-gradient(circle at 60% 60%, #789657 0 24%, transparent 25%),
-    #5f814e;
+.stone-chip {
+  position: absolute;
+  border-radius: 48%;
+  background: rgba(236, 232, 218, 0.32);
 }
 
-.object.sand {
-  border-radius: 42%;
+.chip-a {
+  left: 34%;
+  top: 27%;
+  width: 18%;
+  height: 12%;
+}
+
+.chip-b {
+  left: 55%;
+  top: 46%;
+  width: 15%;
+  height: 10%;
+}
+
+.moss-pad {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, #acc878, #719a58 58%, #507744);
+}
+
+.pad-a {
+  left: 12%;
+  top: 38%;
+  width: 48%;
+  height: 32%;
+}
+
+.pad-b {
+  left: 42%;
+  top: 30%;
+  width: 44%;
+  height: 36%;
+}
+
+.pad-c {
+  left: 28%;
+  top: 54%;
+  width: 52%;
+  height: 28%;
+}
+
+.sand-rake {
+  position: absolute;
+  inset: 23% 12% 22%;
+  border-radius: 50%;
   background:
-    repeating-linear-gradient(28deg, rgba(140, 112, 72, 0.25) 0 2px, transparent 2px 7px),
-    #d6c08f;
+    repeating-linear-gradient(18deg, rgba(134, 108, 72, 0.28) 0 2px, transparent 2px 8px),
+    radial-gradient(ellipse, #d8c392, #bca572);
+  border: 1px solid rgba(123, 93, 56, 0.16);
+}
+
+.ornament-post {
+  position: absolute;
+  left: 45%;
+  top: 34%;
+  width: 10%;
+  height: 44%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #57463f, #a48b74, #4e3931);
+}
+
+.ornament-top {
+  position: absolute;
+  left: 28%;
+  top: 16%;
+  width: 44%;
+  height: 28%;
+  border-radius: 45% 45% 52% 52%;
+  background: linear-gradient(180deg, #eee5c9, #bd8f64 60%, #7b563f);
 }
 
 .angle-badge {
   position: absolute;
-  right: 7%;
-  bottom: 8%;
+  right: 8%;
+  bottom: 9%;
   border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 999px;
   background: rgba(40, 48, 41, 0.72);
   color: #fffaf0;
   padding: 7px 11px;
   font-size: 13px;
+  z-index: 9000;
 }
 
 .rotation-controls {
@@ -272,9 +451,15 @@ label {
   gap: 6px;
 }
 
-label span {
+label span,
+.hint {
   color: var(--muted);
   font-size: 12px;
+}
+
+.hint {
+  min-height: 18px;
+  margin: -2px 0 0;
 }
 
 input,
@@ -290,6 +475,10 @@ textarea {
 
 input[type="range"] {
   padding: 0;
+}
+
+input:disabled {
+  opacity: 0.5;
 }
 
 .field-grid {
@@ -322,7 +511,7 @@ textarea {
   color: var(--danger);
 }
 
-@media (max-width: 940px) {
+@media (max-width: 980px) {
   .app-shell {
     grid-template-columns: 1fr;
   }
@@ -336,8 +525,7 @@ textarea {
   }
 
   .scene-wrap {
-    min-height: 360px;
-    padding: 12px;
+    min-height: 380px;
   }
 }
 
@@ -363,4 +551,3 @@ textarea {
     text-align: left;
   }
 }
-
