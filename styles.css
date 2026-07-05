@@ -17,6 +17,7 @@
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   background:
     linear-gradient(180deg, rgba(255, 252, 244, 0.9), rgba(229, 220, 202, 0.95)),
     radial-gradient(circle at 20% 10%, #f3ead9, transparent 34%);
@@ -202,17 +203,17 @@ h2 {
 .pot-front {
   position: absolute;
   left: 15%;
-  top: 51%;
+  top: 64%;
   width: 70%;
-  height: 31%;
+  height: 18%;
   border-radius: 0 0 48% 48% / 0 0 70% 70%;
   background:
     linear-gradient(180deg, rgba(180, 118, 78, 0.95), #865b40 44%, #5a4132 100%);
   box-shadow:
     inset 0 -20px 28px rgba(45, 26, 17, 0.28),
     inset 0 5px 12px rgba(255, 229, 191, 0.18);
-  clip-path: ellipse(50% 50% at 50% 0%);
-  z-index: 430;
+  clip-path: polygon(4% 0, 96% 0, 88% 72%, 74% 100%, 26% 100%, 12% 72%);
+  z-index: 900;
   pointer-events: none;
 }
 
@@ -221,10 +222,24 @@ h2 {
   position: absolute;
   left: 10%;
   right: 10%;
-  top: 18%;
-  height: 36%;
+  top: 24%;
+  height: 42%;
   border-radius: 50%;
   background: linear-gradient(180deg, rgba(255, 238, 208, 0.18), rgba(255, 238, 208, 0));
+}
+
+.pot-front::before {
+  content: "";
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: -42%;
+  height: 34%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 218, 174, 0.92), rgba(143, 83, 49, 0.62));
+  box-shadow:
+    inset 0 3px 8px rgba(255, 240, 214, 0.35),
+    0 7px 10px rgba(73, 43, 26, 0.14);
 }
 
 .object {
@@ -266,62 +281,168 @@ h2 {
   border-radius: 18px;
 }
 
+.object.tree {
+  filter: drop-shadow(0 var(--shadow-y) var(--shadow-blur) rgba(22, 17, 10, 0.34));
+}
+
+.object.stone,
+.object.moss,
+.object.sand {
+  filter: saturate(0.72) contrast(0.92) drop-shadow(0 var(--shadow-y) var(--shadow-blur) rgba(30, 22, 14, 0.16));
+}
+
+.object.stone {
+  opacity: calc(var(--object-opacity) * 0.82);
+}
+
+.object.moss,
+.object.sand {
+  opacity: calc(var(--object-opacity) * 0.72);
+}
+
 .object.is-back {
   filter: saturate(0.86) drop-shadow(0 var(--shadow-y) var(--shadow-blur) rgba(30, 22, 14, 0.18));
 }
 
-.tree-trunk {
+.tree-root {
   position: absolute;
-  left: 44%;
-  top: 45%;
-  width: 13%;
-  height: 42%;
-  border-radius: 45%;
-  background: linear-gradient(90deg, #4f3627, #7b5638 55%, #3a2a21);
-  transform: rotate(-5deg);
+  bottom: 15%;
+  height: 7%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(58, 39, 27, 0), #5c3c29 28%, #896344 64%, rgba(58, 39, 27, 0));
   z-index: 2;
+}
+
+.root-a {
+  left: 34%;
+  width: 36%;
+  transform: rotate(9deg);
+}
+
+.root-b {
+  left: 25%;
+  width: 30%;
+  transform: rotate(-11deg);
+}
+
+.tree-trunk,
+.tree-branch {
+  position: absolute;
+  display: block;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, rgba(35, 23, 16, 0.95), #765035 36%, #a77b55 58%, #40291d);
+  box-shadow:
+    inset 4px 0 5px rgba(255, 221, 179, 0.13),
+    inset -6px 0 8px rgba(32, 18, 12, 0.28);
+}
+
+.trunk-main {
+  left: 47%;
+  top: 35%;
+  width: 11%;
+  height: 53%;
+  transform: rotate(5deg);
+  transform-origin: 50% 100%;
+  z-index: 8;
+}
+
+.trunk-side {
+  left: 39%;
+  top: 50%;
+  width: 8%;
+  height: 31%;
+  transform: rotate(-24deg);
+  transform-origin: 50% 100%;
+  z-index: 7;
+}
+
+.tree-branch {
+  height: 7%;
+  transform-origin: 10% 50%;
+  z-index: 6;
+}
+
+.branch-left {
+  left: 28%;
+  top: 45%;
+  width: 35%;
+  transform: rotate(-24deg);
+}
+
+.branch-right {
+  left: 50%;
+  top: 39%;
+  width: 34%;
+  transform: rotate(18deg);
+}
+
+.branch-top {
+  left: 47%;
+  top: 28%;
+  width: 24%;
+  transform: rotate(-51deg);
 }
 
 .tree-leaf {
   position: absolute;
-  border-radius: 58% 42% 54% 46%;
-  background: radial-gradient(circle at 34% 26%, #99bd72, #547b45 58%, #375f37);
-  box-shadow: inset -8px -10px 12px rgba(22, 55, 27, 0.22);
-  z-index: 3;
+  border-radius: 56% 44% 58% 42%;
+  background:
+    radial-gradient(circle at 32% 24%, rgba(190, 211, 128, 0.88), transparent 22%),
+    radial-gradient(circle at 65% 40%, rgba(83, 124, 62, 0.95), transparent 34%),
+    radial-gradient(circle at 38% 65%, rgba(65, 104, 53, 0.98), transparent 36%),
+    linear-gradient(135deg, #6d9a56, #315934 78%);
+  box-shadow:
+    inset -10px -12px 16px rgba(16, 47, 24, 0.28),
+    inset 6px 5px 11px rgba(205, 229, 147, 0.18),
+    0 8px 12px rgba(33, 41, 22, 0.16);
+  z-index: 5;
 }
 
-.leaf-a {
-  left: 20%;
-  top: 10%;
-  width: 44%;
-  height: 36%;
-}
-
-.leaf-b {
-  left: 42%;
-  top: 16%;
-  width: 45%;
-  height: 38%;
-}
-
-.leaf-c {
-  left: 28%;
-  top: 34%;
-  width: 52%;
+.leaf-left {
+  left: 8%;
+  top: 24%;
+  width: 48%;
   height: 34%;
+  transform: rotate(-9deg);
+}
+
+.leaf-right {
+  left: 49%;
+  top: 17%;
+  width: 43%;
+  height: 34%;
+  transform: rotate(7deg);
+}
+
+.leaf-crown {
+  left: 31%;
+  top: 4%;
+  width: 43%;
+  height: 32%;
+  transform: rotate(-3deg);
+}
+
+.leaf-front {
+  left: 29%;
+  top: 42%;
+  width: 50%;
+  height: 25%;
+  border-radius: 48% 52% 46% 54%;
+  z-index: 5;
 }
 
 .stone-core {
   position: absolute;
-  inset: 18% 12% 20%;
+  inset: 24% 18% 23%;
   border-radius: 44% 56% 52% 48%;
-  background: radial-gradient(circle at 34% 28%, #d2cdbc, #8e887b 62%, #5f5a50);
+  background: radial-gradient(circle at 34% 28%, #c7c0ad, #858073 62%, #625d54);
 }
 
 .stone-chip {
   position: absolute;
   border-radius: 48%;
-  background: rgba(236, 232, 218, 0.32);
+  background: rgba(236, 232, 218, 0.22);
 }
 
 .chip-a {
@@ -341,7 +462,7 @@ h2 {
 .moss-pad {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle at 32% 30%, #acc878, #719a58 58%, #507744);
+  background: radial-gradient(circle at 32% 30%, #9db471, #6e8f58 58%, #557247);
 }
 
 .pad-a {
@@ -367,11 +488,11 @@ h2 {
 
 .sand-rake {
   position: absolute;
-  inset: 23% 12% 22%;
+  inset: 30% 20% 27%;
   border-radius: 50%;
   background:
-    repeating-linear-gradient(18deg, rgba(134, 108, 72, 0.28) 0 2px, transparent 2px 8px),
-    radial-gradient(ellipse, #d8c392, #bca572);
+    repeating-linear-gradient(18deg, rgba(134, 108, 72, 0.18) 0 2px, transparent 2px 8px),
+    radial-gradient(ellipse, #d2bd8d, #b8a171);
   border: 1px solid rgba(123, 93, 56, 0.16);
 }
 

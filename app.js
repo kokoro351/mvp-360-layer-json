@@ -7,10 +7,10 @@ const typeLabels = {
 };
 
 const typeRules = {
-  tree: { rMax: 72, zMin: 0, zMax: 0, baseSize: 84, defaultWeight: 46, defaultScale: 1 },
-  stone: { rMax: 92, zMin: 0, zMax: 16, baseSize: 48, defaultWeight: 18, defaultScale: 1 },
-  moss: { rMax: 98, zMin: 0, zMax: 0, baseSize: 58, defaultWeight: 8, defaultScale: 1 },
-  sand: { rMax: 100, zMin: 0, zMax: 0, baseSize: 72, defaultWeight: 5, defaultScale: 1 },
+  tree: { rMax: 72, zMin: 0, zMax: 0, baseSize: 138, defaultWeight: 46, defaultScale: 1 },
+  stone: { rMax: 92, zMin: 0, zMax: 16, baseSize: 42, defaultWeight: 18, defaultScale: 0.9 },
+  moss: { rMax: 98, zMin: 0, zMax: 0, baseSize: 48, defaultWeight: 8, defaultScale: 0.95 },
+  sand: { rMax: 100, zMin: 0, zMax: 0, baseSize: 58, defaultWeight: 5, defaultScale: 0.9 },
   ornament: { rMax: 92, zMin: 0, zMax: 48, baseSize: 42, defaultWeight: 7, defaultScale: 1 },
 };
 
@@ -33,10 +33,10 @@ const initialState = {
     angle: 0,
   },
   objects: [
-    { id: "tree-1", type: "tree", name: "黒松の株", r: 30, theta: 270, z: 0, layer: 8, weight: 46, scale: 1.1, rotation: 0 },
-    { id: "stone-1", type: "stone", name: "添え石", r: 70, theta: 42, z: 6, layer: 3, weight: 18, scale: 1, rotation: 14 },
-    { id: "moss-1", type: "moss", name: "苔むら", r: 76, theta: 132, z: 0, layer: 2, weight: 8, scale: 1.2, rotation: 0 },
-    { id: "sand-1", type: "sand", name: "砂紋", r: 42, theta: 88, z: 0, layer: 1, weight: 5, scale: 1.15, rotation: 24 },
+    { id: "tree-1", type: "tree", name: "黒松の株", r: 24, theta: 90, z: 0, layer: 10, weight: 46, scale: 1.05, rotation: 0 },
+    { id: "stone-1", type: "stone", name: "添え石", r: 70, theta: 42, z: 4, layer: 3, weight: 18, scale: 0.86, rotation: 14 },
+    { id: "moss-1", type: "moss", name: "苔むら", r: 76, theta: 132, z: 0, layer: 2, weight: 8, scale: 0.98, rotation: 0 },
+    { id: "sand-1", type: "sand", name: "砂紋", r: 42, theta: 88, z: 0, layer: 1, weight: 5, scale: 0.9, rotation: 24 },
   ],
 };
 
@@ -159,7 +159,7 @@ function sortedObjects() {
 }
 
 function objectMarkup(type) {
-  if (type === "tree") return '<span class="tree-trunk"></span><span class="tree-leaf leaf-a"></span><span class="tree-leaf leaf-b"></span><span class="tree-leaf leaf-c"></span>';
+  if (type === "tree") return '<span class="tree-root root-a"></span><span class="tree-root root-b"></span><span class="tree-trunk trunk-main"></span><span class="tree-trunk trunk-side"></span><span class="tree-branch branch-left"></span><span class="tree-branch branch-right"></span><span class="tree-branch branch-top"></span><span class="tree-leaf leaf-left"></span><span class="tree-leaf leaf-right"></span><span class="tree-leaf leaf-crown"></span><span class="tree-leaf leaf-front"></span>';
   if (type === "stone") return '<span class="stone-core"></span><span class="stone-chip chip-a"></span><span class="stone-chip chip-b"></span>';
   if (type === "moss") return '<span class="moss-pad pad-a"></span><span class="moss-pad pad-b"></span><span class="moss-pad pad-c"></span>';
   if (type === "sand") return '<span class="sand-rake"></span>';
